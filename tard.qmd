@@ -1,0 +1,32 @@
+---
+title: "Table"
+author: "Atahualpa"
+format: html
+editor: visual
+---
+
+```{r}
+library(tidyverse)
+library(lterdatasampler)
+library(kableExtra)
+```
+
+```{r}
+
+table_maples <- hbr_maples |>
+  group_by(watershed, year) |>
+  summarize( mean_height = round(mean(stem_length, na.rm = TRUE), 1),
+             sd_height = round(sd(stem_length,na.rm = TRUE)), 2)
+
+
+```
+
+```{r}
+table_maples |>
+  kable(col.names = c("Watershed", "Year", "Mean Seedling Height (sq.cm)", "SD Seedling Height (sq.cm)" )) |>
+  kable_styling(bootstrap_options = "striped") |>
+  column_spec(1, bold = TRUE, background = "orange") |>
+  add_header_above(c(" " = 2, "Seedling dimension"=2)) |>
+  scroll_box( height = "50", )
+  
+```
